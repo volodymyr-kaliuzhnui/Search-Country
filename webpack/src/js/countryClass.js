@@ -47,19 +47,23 @@ class Country {
   }
 
   getContent = (data) => {
+    if (data.length === 1) {
+      countryTotal.innerHTML = countryMarkup(data);
+      return
+    }
     if (data.length === 2 && data.length < 10) {
       data.forEach(country => {
         countryInfo.insertAdjacentHTML('beforeend', `<h3 class="countryName">${country.name}</h3>`)
       })
+      return
     }
     if (data.length > 10) {
       alert({
         text: 'Specify your country more precisely!'
       })
+      return
     }
-    if (data.length === 1) {
-      countryTotal.innerHTML = countryMarkup(data);
-    }
+
   }
 
 
