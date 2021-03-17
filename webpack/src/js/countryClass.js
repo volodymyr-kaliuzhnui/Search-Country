@@ -1,5 +1,5 @@
 import refs from "./refs";
-import { alert, defaultModules } from '@pnotify/core';
+import {error, alert, defaultModules } from '@pnotify/core';
 import * as PNotifyMobile from '@pnotify/mobile';
 import countryMarkup from '../templates/country.hbs'
 
@@ -27,9 +27,12 @@ class Country {
     if (this.country === '' || !isNaN(this.country)) {
       countryInfo.innerHTML = '';
       countryTotal.innerHTML = '';
+      alert({
+        text: 'Enter your country '
+      })
     } else {
       fetch('https://restcountries.eu/rest/v2/name/' + this.country)
-        .then(res => res.json(res))
+        .then(res => res.ok ? res.json(): Promise.reject(res))
         .then(data => {
           if (data.length === 2 && data.length < 10) {
             data.forEach(country => {
@@ -44,7 +47,11 @@ class Country {
           if (data.length === 1) {
             countryTotal.innerHTML = countryMarkup(data);
           }
-        })
+        }).catch(() => {
+          error({
+            text: 'Error!'
+          })
+      })
     }
   }
 

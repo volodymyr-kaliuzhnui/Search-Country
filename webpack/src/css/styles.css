@@ -20,6 +20,7 @@ body {
 .container .country-info {
   margin-bottom: 50px;
 }
+
 .container .country-total {
   display: flex;
   flex-direction: column;
