@@ -23,12 +23,8 @@ class Country {
 
   search (event) {
     this.country = event.target.value.toLowerCase();
-    if (!isNaN(this.country)) {
-      alert({
-        text: `Set Country name!`
-      })
-    }
-    if (this.country === '') {
+
+    if (this.country === '' || !isNaN(this.country)) {
       countryInfo.innerHTML = '';
       countryTotal.innerHTML = '';
     } else {
