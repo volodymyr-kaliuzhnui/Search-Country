@@ -35,14 +35,19 @@ class Country {
   }
 
   newFetch = () => {
-    fetch(this.url + this.country)
-      .then(res => res.ok ? res.json(): Promise.reject(res))
+    fetch(this.url + this.country).then(res => res.json())
       .then(data => {
+        if (data.status === 404) {
+          error({
+            text: 'Error!'
+          })
+        }
         this.getContent(data)
-      }).catch((errorMSG) => {
-      error({
-        text: `Error!`
       })
+      .catch(errorMSG => {
+        error({
+          text: 'Promise error!!'
+        })
     })
   }
 
@@ -61,7 +66,6 @@ class Country {
       alert({
         text: 'Specify your country more precisely!'
       })
-      return
     }
 
   }
