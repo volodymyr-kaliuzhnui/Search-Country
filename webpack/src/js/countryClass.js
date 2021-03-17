@@ -27,7 +27,6 @@ class Country {
       alert({
         text: `Set Country name!`
       })
-      return
     }
     if (this.country === '') {
       countryInfo.innerHTML = '';
@@ -43,7 +42,7 @@ class Country {
           }
           if (data.length > 10) {
             alert({
-              text: 'Вкажіть вашу країну більш конкретно!'
+              text: 'Specify your country more precisely!'
             })
           }
           if (data.length === 1) {
