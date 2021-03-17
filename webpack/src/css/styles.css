@@ -1,0 +1,36 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+body {
+  background: darkgrey;
+  padding: 30px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.container .select {
+  margin-bottom: 10px;
+}
+
+.container .country-info {
+  margin-bottom: 50px;
+}
+.container .country-total {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 25px;
+}
+
+.container .country-total img {
+  max-width: 300px;
+}
+
+.container .country-total image, .container .country-total p, .container .country-total h1, .container .country-total h2 {
+  margin-bottom: 20px;
+}
