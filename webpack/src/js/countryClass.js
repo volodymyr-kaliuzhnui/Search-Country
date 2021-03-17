@@ -10,18 +10,17 @@ let debounce = require('lodash.debounce');
 let {inputRef, countryInfo, countryTotal} = refs
 
 class Country {
-  constructor(inputRef) {
+  constructor(url) {
     this.getCountry = inputRef;
     this.country = '';
+    this.url = url;
   }
   init () {
     this.getCountry.addEventListener('input', debounce(this.search, 500))
 
 
   }
-
-
-  search (event) {
+  search = (event) => {
     this.country = event.target.value.toLowerCase();
 
     if (this.country === '' || !isNaN(this.country)) {
@@ -31,36 +30,42 @@ class Country {
         text: 'Enter your country '
       })
     } else {
-      fetch('https://restcountries.eu/rest/v2/name/' + this.country)
-        .then(res => res.ok ? res.json(): Promise.reject(res))
-        .then(data => {
-          if (data.length === 2 && data.length < 10) {
-            data.forEach(country => {
-              countryInfo.insertAdjacentHTML('beforeend', `<h3 class="countryName">${country.name}</h3>`)
-            })
-          }
-          if (data.length > 10) {
-            alert({
-              text: 'Specify your country more precisely!'
-            })
-          }
-          if (data.length === 1) {
-            countryTotal.innerHTML = countryMarkup(data);
-          }
-        }).catch(() => {
-          error({
-            text: 'Error!'
-          })
+      this.newFetch();
+    }
+  }
+
+  newFetch = () => {
+    fetch(this.url + this.country)
+      .then(res => res.ok ? res.json(): Promise.reject(res))
+      .then(data => {
+        this.getContent(data)
+      }).catch((errorMSG) => {
+      error({
+        text: `Error!`
       })
+    })
+  }
+
+  getContent = (data) => {
+    if (data.length === 2 && data.length < 10) {
+      data.forEach(country => {
+        countryInfo.insertAdjacentHTML('beforeend', `<h3 class="countryName">${country.name}</h3>`)
+      })
+    }
+    if (data.length > 10) {
+      alert({
+        text: 'Specify your country more precisely!'
+      })
+    }
+    if (data.length === 1) {
+      countryTotal.innerHTML = countryMarkup(data);
     }
   }
 
 
-
-
 }
 
-let country = new Country(inputRef);
+let country = new Country('https://restcountries.eu/rest/v2/name/');
 country.init();
 
 
